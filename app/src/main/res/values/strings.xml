@@ -39,4 +39,9 @@
     <string name="login_text">login</string>
     <string name="register_text">Register</string>
     <string name="todo_text">TODO</string>
+    <string name="post_ideas">Post your ideas here</string>
+    <string name="title_idea">Title of the idea</string>
+    <string name="idea_abstract">Abstract</string>
+    <string name="idea_content">Content</string>
+    <string name="post_idea">Post Idea</string>
 </resources>
