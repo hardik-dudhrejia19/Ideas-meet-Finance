@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "854100436588-bghlbvupejorlcusf37bco04ajl9e11k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dal.ideasmeetfinance",
+            "certificate_hash": "dff7313bd0e7be7ed1a093e56d63f95a9ef7826a"
+          }
+        },
+        {
           "client_id": "854100436588-m371f65febqaolv4segmat1cj8tsuv9a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
