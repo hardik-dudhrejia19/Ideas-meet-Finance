@@ -19,4 +19,29 @@
     <string name="menu_send">Send</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+    <!--    <string name="pwd"> Password </string>-->
+    <!--    <string name="username"> User Name </string>-->
+    <!--    <string name="regbtn"> REGISTER </string>-->
+    <!--    <string name="name"> Name </string>-->
+    <!--    <string name="Financer"> Financer </string>-->
+    <!--    <string name="email"> Email </string>-->
+    <!--    <string name="Enterpreneur">Enterpreneur</string>-->
+    <string name="email"> E-Mail </string>
+    <string name="pwd"> Password </string>
+    <string name="DalId">Username</string>
+    <string name="regbtn"> REGISTER </string>
+    <string name="name"> Name </string>
+    <string name="StudentRadioBtn">Financer</string>
+    <string name="ProfessorRadioBtn">Entrepreneur</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="login_text">login</string>
+    <string name="register_text">Register</string>
+    <string name="todo_text">TODO</string>
+    <string name="post_ideas">Post your ideas here</string>
+    <string name="title_idea">Title of the idea</string>
+    <string name="idea_abstract">Abstract</string>
+    <string name="idea_content">Content</string>
+    <string name="post_idea">Post Idea</string>
 </resources>
