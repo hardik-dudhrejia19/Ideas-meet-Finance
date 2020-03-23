@@ -1,9 +1,7 @@
 package com.dal.ideasmeetfinance;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.dal.ideasmeetfinance.pojo.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.dal.ideasmeetfinance.pojo.Users;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Registration extends AppCompatActivity {
     private EditText name, email, password, dalId;
@@ -130,11 +131,19 @@ public class Registration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+
+
                             // Sign in success, update UI with the signed-in user's information
                             System.out.println("success");
                             //  Log.d(LOG_TAG,"TAG",+ task.isSuccessful());
                             FirebaseUser user = mAuth.getCurrentUser();
                             userID = mAuth.getUid();
+                            SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+                            SharedPreferences.Editor ed = sp.edit();
+                            ed.putString("UserName", dalId);
+                            ed.putString("UserId",userID);
+                            ed.apply();
                             System.out.println("uid is" + userID);
                             userProfileCreation(name, mail, dalId, studnt, prof, userID);
                             Toast.makeText(Registration.this, "Registration Success",
@@ -164,7 +173,6 @@ public class Registration extends AppCompatActivity {
         user.setEntrepreneur(entrepreneur);
         user.setDalId(dalId);
         user.setUserId(userID);
-        //  System.out.println("the BASE64String is" + profilePhoto);
         mDatabase.child("users").child(userID).setValue(user);
         startActivity(new Intent(Registration.this, LoginActivity.class));
     }
