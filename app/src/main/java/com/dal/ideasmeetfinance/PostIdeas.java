@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.dal.ideasmeetfinance.pojo.Posting;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class PostIdeas extends AppCompatActivity {
     private DatabaseReference databaseReference;
+    Posting idea;
 
 
     @Override
@@ -23,7 +25,7 @@ public class PostIdeas extends AppCompatActivity {
         Button btn = findViewById(R.id.btnRegister);
         SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
 
-        final String user_name = sp.getString("UserId", null);
+        final String user_id = sp.getString("UserId", null);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,11 +37,14 @@ public class PostIdeas extends AppCompatActivity {
 
                 String title_text = title.getText().toString();
                 String abs_text = abs.getText().toString();
-                String content_text = abs.getText().toString();
-                databaseReference = FirebaseDatabase.getInstance().getReference("ideas");
-
-
-                Toast.makeText(getApplicationContext(),user_name,Toast.LENGTH_SHORT).show();
+                String content_text = content.getText().toString();
+                databaseReference = FirebaseDatabase.getInstance().getReference("ideas").child(user_id);
+                idea = new Posting();
+                idea.setTitle(title_text);
+                idea.setAbs(abs_text);
+                idea.setContent(content_text);
+                databaseReference.push().setValue(idea);
+                Toast.makeText(getApplicationContext(),"SUCCESS",Toast.LENGTH_SHORT).show();
             }
         });
     }
