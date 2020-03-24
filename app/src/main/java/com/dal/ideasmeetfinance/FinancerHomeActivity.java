@@ -6,17 +6,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.dal.ideasmeetfinance.pojo.CardModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class FinancerHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
+    private RecyclerView recyclerView;
+    private FactAdapter adapter;
+    private List<CardModel> allFactsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +42,23 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
         View headerLayout = navigationView.getHeaderView(0);
         TextView txt_email =  headerLayout.findViewById(R.id.userEmail);
         TextView txt_username =  headerLayout.findViewById(R.id.userName);
+
+        allFactsList = new ArrayList<>();
+        recyclerView = findViewById(R.id.recycler_view);
+
+
+
+        allFactsList.add(
+                new CardModel(R.drawable.baby, "This is title","This is abstract","This is content"));
+
+        allFactsList.add(
+                new CardModel(R.drawable.baby, "Second title","Second abstract","Second content"));
+
+        adapter = new FactAdapter(FinancerHomeActivity.this, allFactsList);
+        recyclerView.setAdapter(adapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         FloatingActionButton floatingActionButton =
                 (FloatingActionButton) findViewById(R.id.fab);
