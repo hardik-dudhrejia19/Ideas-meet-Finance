@@ -1,5 +1,6 @@
 package com.dal.ideasmeetfinance;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +46,7 @@ public class PostIdeas extends AppCompatActivity {
                 idea.setContent(content_text);
                 databaseReference.push().setValue(idea);
                 Toast.makeText(getApplicationContext(),"SUCCESS",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(PostIdeas.this,FinancerHomeActivity.class));
             }
         });
     }
