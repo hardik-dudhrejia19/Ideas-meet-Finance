@@ -3,14 +3,14 @@ package com.dal.ideasmeetfinance.pojo;
 public class Users {
     String email;
     String name;
-    String dalId;
+    String username;
     Boolean entrepreneur, financer;
     String userId;
 
-    public Users(String email, String name, String dalId, Boolean entrepreneur, Boolean financer, String userId) {
+    public Users(String email, String name, String username, Boolean entrepreneur, Boolean financer, String userId) {
         this.email = email;
         this.name = name;
-        this.dalId = dalId;
+        this.username = username;
         this.entrepreneur = entrepreneur;
         this.financer = financer;
         this.userId = userId;
@@ -61,15 +61,11 @@ public class Users {
     }
 
 
-    public String getDalId() {
-        return dalId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setDalId(String dalId) {
-        this.dalId = dalId;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
-
-
-
 }

@@ -42,6 +42,7 @@ public class FactAdapter extends  RecyclerView.Adapter<FactAdapter.FactViewHolde
         holder.imgView.setImageDrawable(ctx.getResources().getDrawable(cards.getImage(),null));
         holder.abs_view.setText(cards.getAbs_card());
         holder.content_view.setText(cards.getContent_card());
+        holder.name.setText(cards.getUser_name());
     }
 
     @Override
@@ -57,6 +58,7 @@ public class FactAdapter extends  RecyclerView.Adapter<FactAdapter.FactViewHolde
         TextView title_view;
         TextView abs_view;
         TextView content_view;
+        TextView name;
 
 
         public FactViewHolder(@NonNull View itemView) {
@@ -66,6 +68,7 @@ public class FactAdapter extends  RecyclerView.Adapter<FactAdapter.FactViewHolde
             title_view = itemView.findViewById(R.id.title_card);
             abs_view = itemView.findViewById(R.id.abs_card);
             content_view = itemView.findViewById(R.id.content_card);
+            name = itemView.findViewById(R.id.name_user);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +10,11 @@ import android.widget.TextView;
 import com.dal.ideasmeetfinance.pojo.CardModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +32,7 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
     private RecyclerView recyclerView;
     private FactAdapter adapter;
     private List<CardModel> allFactsList;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +50,37 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
         TextView txt_email =  headerLayout.findViewById(R.id.userEmail);
         TextView txt_username =  headerLayout.findViewById(R.id.userName);
 
+        SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
+
+        final String user_name_sp = sp.getString("UserName", null);
+
         allFactsList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("ideas");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot unit : dataSnapshot.getChildren()){
+                    for (DataSnapshot indi : unit.getChildren()){
+                        String title_txt = indi.child("title").getValue().toString();
+                        String abstract_txt = indi.child("abs").getValue().toString();
+                        String content_txt = indi.child("content").getValue().toString();
+                        allFactsList.add(
+                                new CardModel(R.drawable.baby,user_name_sp,title_txt,abstract_txt,content_txt));
+                    }
+                }
+                adapter = new FactAdapter(FinancerHomeActivity.this, allFactsList);
+                recyclerView.setAdapter(adapter);
 
+                recyclerView.setLayoutManager(new LinearLayoutManager(FinancerHomeActivity.this));
+            }
 
-        allFactsList.add(
-                new CardModel(R.drawable.baby, "This is title","This is abstract","This is content"));
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        allFactsList.add(
-                new CardModel(R.drawable.baby, "Second title","Second abstract","Second content"));
-
-        adapter = new FactAdapter(FinancerHomeActivity.this, allFactsList);
-        recyclerView.setAdapter(adapter);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+            }
+        });
 
         FloatingActionButton floatingActionButton =
                 (FloatingActionButton) findViewById(R.id.fab);

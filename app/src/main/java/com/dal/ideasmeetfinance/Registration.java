@@ -124,8 +124,8 @@ public class Registration extends AppCompatActivity {
 //        FirebaseUser currentUser = mAuth.getCurrentUser();
 //        updateUI(currentUser);
 //    }
-    protected void firebaseAuthInsertion(final String mail, String password, final String dalId,
-                                         final String name, final boolean studnt, final boolean prof) {
+    protected void firebaseAuthInsertion(final String mail, String password, final String username,
+                                         final String name, final boolean financer, final boolean entrepreneur) {
         mAuth.createUserWithEmailAndPassword(mail, password)
                 .addOnCompleteListener(Registration.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -141,11 +141,12 @@ public class Registration extends AppCompatActivity {
                             userID = mAuth.getUid();
                             SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
                             SharedPreferences.Editor ed = sp.edit();
-                            ed.putString("UserName", dalId);
+                            ed.putString("UserName", username);
                             ed.putString("UserId",userID);
+                            ed.putString("ScreeName",name);
                             ed.apply();
                             System.out.println("uid is" + userID);
-                            userProfileCreation(name, mail, dalId, studnt, prof, userID);
+                            userProfileCreation(name, mail, username, financer, entrepreneur, userID);
                             Toast.makeText(Registration.this, "Registration Success",
                                     Toast.LENGTH_LONG).show();
                             System.out.println("Registration  is successful");
@@ -164,14 +165,14 @@ public class Registration extends AppCompatActivity {
     }
 
     //Setting values based on user type
-    protected void userProfileCreation(String name, String email, String dalId,
+    protected void userProfileCreation(String name, String email, String username,
                                        final boolean financer, final boolean entrepreneur, String userID) {
         Users user = new Users();
         user.setEmail(email);
         user.setName(name);
         user.setFinancer(financer);
         user.setEntrepreneur(entrepreneur);
-        user.setDalId(dalId);
+        user.setUsername(username);
         user.setUserId(userID);
         mDatabase.child("users").child(userID).setValue(user);
         startActivity(new Intent(Registration.this, LoginActivity.class));

@@ -27,7 +27,7 @@ public class PostIdeas extends AppCompatActivity {
         SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
 
         final String user_id = sp.getString("UserId", null);
-
+        
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
