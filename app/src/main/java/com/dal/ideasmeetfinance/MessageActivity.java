@@ -52,17 +52,6 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-//        Toolbar toolbar=findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -74,12 +63,12 @@ public class MessageActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-//
+
         profile_image=findViewById(R.id.profile_image);
         username=findViewById(R.id.username);
         btn_send=findViewById(R.id.btn_send);
         text_send=findViewById(R.id.text_send);
-//
+
         intent=getIntent();
         final String authorId=intent.getStringExtra("authorId");
 
@@ -103,7 +92,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
         reference= FirebaseDatabase.getInstance().getReference("users").child(authorId);
-//
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -152,7 +141,7 @@ public class MessageActivity extends AppCompatActivity {
                         Log.e("try","inside adding chats");
                         mchat.add(chat) ;
                         System.out.println("hi hello "+mchat);
-                    } /////
+                    }
 
                     messageAdapter=new MessageAdapter(MessageActivity.this,mchat);
                     recyclerView.setAdapter(messageAdapter);

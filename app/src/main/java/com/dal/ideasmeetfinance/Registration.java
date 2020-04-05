@@ -168,12 +168,20 @@ public class Registration extends AppCompatActivity {
     protected void userProfileCreation(String name, String email, String username,
                                        final boolean financer, final boolean entrepreneur, String userID) {
         Users user = new Users();
+        String decision;
+        if(financer){
+             decision = "Ftrue";
+        }
+        else{
+             decision = "FFalse";
+        }
         user.setEmail(email);
         user.setName(name);
         user.setFinancer(financer);
         user.setEntrepreneur(entrepreneur);
         user.setUsername(username);
         user.setUserId(userID);
+        user.setDescision(decision);
         mDatabase.child("users").child(userID).setValue(user);
         startActivity(new Intent(Registration.this, LoginActivity.class));
     }

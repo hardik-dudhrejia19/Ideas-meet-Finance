@@ -96,33 +96,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dal.ideasmeetfinance.pojo.Posting;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import android.content.SharedPreferences;
+import com.dal.ideasmeetfinance.pojo.ChatModel;
+
 
 
 import java.util.List;
 
-//This java class acts like an adapter and is used to inflate the card_view.xml layout
+//This java class acts like an adapter and is used to inflate the chats_card.xml layout
 //with the individual cards.
 
 
-public class FactAdapter extends  RecyclerView.Adapter<FactAdapter.FactViewHolder>{
-    private static final Object MODE_PRIVATE = 1;
+public class ChatAdapter extends  RecyclerView.Adapter<ChatAdapter.FactViewHolder>{
     private Context ctx;
-    private List<Posting> factsList;
+    private List<ChatModel> factsList;
 
 
     private String actUserName;
 
-    public FactAdapter(Context ctx, List<Posting> factsList) {
+    public ChatAdapter(Context ctx, List<ChatModel> factsList) {
         this.ctx = ctx;
         this.factsList = factsList;
     }
@@ -136,55 +132,25 @@ public class FactAdapter extends  RecyclerView.Adapter<FactAdapter.FactViewHolde
         return holder;
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull final FactViewHolder holder, int position) {
-        final Posting cards = factsList.get(position);
-        holder.title_view.setText(cards.getTitle());
+        final ChatModel cards = factsList.get(position);
+        holder.name_chat.setText(cards.getNameCard());
         holder.imgView.setImageDrawable(ctx.getResources().getDrawable(cards.getImage(),null));
-        holder.abs_view.setText(cards.getAbs());
-        //holder.content_view.setText(cards.getContent());
-        //databaseReference= FirebaseDatabase.getInstance().getReference("users").child(cards.getAuthor());
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference().child("users").child(cards.getAuthor())
-                        .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                final String userName = dataSnapshot.child("username").getValue(String.class);
-                                Log.e("m","username is: "+userName);
-                                try{
-                                    actUserName=userName;
-                                    holder.name.setText("Created by :"+userName);
-                                }
-                                catch(Exception e)
-                                {
-                                    Log.e("m","error: "+e);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                Log.e("m","cancel");
-                            }
-
-                        });
-
-        //holder.name.setText("Created by: "+cards.getAuthor());
+//        holder.hidden_chat.setText(cards.getNameHidden());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(ctx, DetailedIdea.class);
-                intent.putExtra("title", cards.getTitle());
-                intent.putExtra("abstractTxt", cards.getAbs());
-                intent.putExtra("content", cards.getContent());
-                intent.putExtra("authorId",cards.getAuthor());
-                intent.putExtra("author",actUserName);
-                //intent.putExtra("author", cards.getUsername());
-                ctx.startActivity(intent);
+                Intent i = new Intent(ctx,MessageActivity.class);
+                String authorId = cards.getNameHidden();
+                i.putExtra("authorId",authorId);
+                ctx.startActivity(i);
             }
         });
+
     }
 
     @Override
@@ -197,20 +163,18 @@ public class FactAdapter extends  RecyclerView.Adapter<FactAdapter.FactViewHolde
     class FactViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgView;
-        TextView title_view;
-        TextView abs_view;
-        TextView content_view;
-        TextView name;
+        TextView name_chat;
+        TextView hidden_chat;
+
 
 
         public FactViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgView = itemView.findViewById(R.id.idea_image);
-            title_view = itemView.findViewById(R.id.title_card);
-            abs_view = itemView.findViewById(R.id.abs_card);
-//            content_view = itemView.findViewById(R.id.content_card);
-            name = itemView.findViewById(R.id.name_author);
+            name_chat = itemView.findViewById(R.id.title_card);
+            hidden_chat = itemView.findViewById(R.id.abs_card);
+
         }
     }
 }
