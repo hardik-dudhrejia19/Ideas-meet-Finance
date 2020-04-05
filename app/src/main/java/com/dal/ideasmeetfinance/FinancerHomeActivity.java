@@ -1,13 +1,18 @@
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
-import com.dal.ideasmeetfinance.pojo.CardModel;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.dal.ideasmeetfinance.pojo.Posting;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -19,19 +24,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class FinancerHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
     private RecyclerView recyclerView;
     private FactAdapter adapter;
-    private List<CardModel> allFactsList;
+    //private List<CardModel> allFactsList;
+    private List<Posting> allFactsList;
     private DatabaseReference databaseReference;
 
     @Override
@@ -47,12 +46,13 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
         navigationView.setNavigationItemSelectedListener(this);
 
         View headerLayout = navigationView.getHeaderView(0);
-        TextView txt_email =  headerLayout.findViewById(R.id.userEmail);
-        TextView txt_username =  headerLayout.findViewById(R.id.userName);
+//        TextView txt_email =  headerLayout.findViewById(R.id.userEmail);
+//        TextView txt_username =  headerLayout.findViewById(R.id.userName);
 
-        SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
+        //SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
 
-        final String user_name_sp = sp.getString("UserName", null);
+        //final String user_name_sp = sp.getString("UserName", null);
+        //Log.e("s","Sp username: "+user_name_sp);
 
         allFactsList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
@@ -60,14 +60,18 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
         databaseReference = FirebaseDatabase.getInstance().getReference("ideas");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot unit : dataSnapshot.getChildren()){
-                    for (DataSnapshot indi : unit.getChildren()){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot unit : dataSnapshot.getChildren())
+                {
+                    for (DataSnapshot indi : unit.getChildren())
+                    {
                         String title_txt = indi.child("title").getValue().toString();
                         String abstract_txt = indi.child("abs").getValue().toString();
                         String content_txt = indi.child("content").getValue().toString();
+                        String author= indi.child("author").getValue().toString();
                         allFactsList.add(
-                                new CardModel(R.drawable.baby,user_name_sp,title_txt,abstract_txt,content_txt));
+                                new Posting(R.drawable.ideapng,author,title_txt,abstract_txt,content_txt));
                     }
                 }
                 adapter = new FactAdapter(FinancerHomeActivity.this, allFactsList);
