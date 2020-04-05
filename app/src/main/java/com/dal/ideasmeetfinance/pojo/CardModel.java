@@ -1,7 +1,7 @@
 package com.dal.ideasmeetfinance.pojo;
 
 public class CardModel {
-    private int image;
+    private int image,numberOfLikes;
     private String user_name;
     private String title_card;
     private String abs_card;
