@@ -122,7 +122,6 @@ public class Posting {
 
     public void setAuthor(String author) {
         this.author = author;
-        Log.e("m","inside fn call set author id:"+this.author);
     }
 
     public String getTitle() {

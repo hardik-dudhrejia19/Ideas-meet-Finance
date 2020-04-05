@@ -1,6 +1,7 @@
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -71,8 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LoginActivity.this, "Authentication Success.",
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivity.this, "Authentication Success.",
+//                                    Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             String userid = user.getUid();
 
@@ -84,6 +85,15 @@ public class LoginActivity extends AppCompatActivity {
                                         if ((childData.child("entrepreneur").getValue().toString() == "true") || (childData.child("financer").getValue().toString() == "false")) {
                                             Intent i = new Intent(LoginActivity.this, UserHomeActivity.class);
                                             startActivity(i);
+                                            SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+                                            SharedPreferences.Editor ed = sp.edit();
+                                            ed.putString("UserName", childData.child("username").getValue().toString());
+                                            ed.putString("UserId",childData.child("userId").getValue().toString());
+                                            ed.putString("ScreeName",childData.child("name").getValue().toString());
+                                            ed.putString("Financer",childData.child("financer").getValue().toString());
+                                            ed.putString("Decider",childData.child("descision").getValue().toString());
+
+                                            ed.apply();
                                             finish();
                                         }
                                         //financer login
@@ -91,6 +101,16 @@ public class LoginActivity extends AppCompatActivity {
                                             Intent i = new Intent(LoginActivity.this, FinancerHomeActivity.class);
                                             //Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                             startActivity(i);
+
+                                            SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+                                            SharedPreferences.Editor ed = sp.edit();
+                                            ed.putString("UserName", childData.child("username").getValue().toString());
+                                            ed.putString("UserId",childData.child("userId").getValue().toString());
+                                            ed.putString("ScreeName",childData.child("name").getValue().toString());
+                                            ed.putString("Financer",childData.child("financer").getValue().toString());
+                                            ed.putString("Decider",childData.child("descision").getValue().toString());
+
+                                            ed.apply();
                                             finish();
                                         }
                                     }

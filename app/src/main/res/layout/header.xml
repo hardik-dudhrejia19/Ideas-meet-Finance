@@ -11,7 +11,7 @@
         android:id="@+id/profilePicture"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@drawable/baby" />
+        android:src="@drawable/ideas" />
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"

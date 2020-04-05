@@ -6,14 +6,17 @@ public class Users {
     String username;
     Boolean entrepreneur, financer;
     String userId;
+    String descision;
 
-    public Users(String email, String name, String username, Boolean entrepreneur, Boolean financer, String userId) {
+
+    public Users(String email, String name, String username, Boolean entrepreneur, Boolean financer, String userId,String descision) {
         this.email = email;
         this.name = name;
         this.username = username;
         this.entrepreneur = entrepreneur;
         this.financer = financer;
         this.userId = userId;
+        this.descision = descision;
     }
 
     public Users() {
@@ -27,6 +30,13 @@ public class Users {
         this.userId = userId;
     }
 
+    public String getDescision() {
+        return descision;
+    }
+
+    public void setDescision(String descision) {
+        this.descision = descision;
+    }
 
     public String getEmail() {
         return email;

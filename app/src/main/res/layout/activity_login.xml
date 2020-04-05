@@ -13,7 +13,7 @@
         android:layout_height="274dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:src="@drawable/baby"
+        android:src="@drawable/ideas"
         tools:ignore="MissingConstraints"
         android:contentDescription="@string/todo_text">
 

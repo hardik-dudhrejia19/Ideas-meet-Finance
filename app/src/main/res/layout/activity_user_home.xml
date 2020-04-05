@@ -7,6 +7,7 @@
     tools:context=".MainActivity"
     android:id="@+id/main">
 
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         app:headerLayout="@layout/header"
@@ -18,5 +19,36 @@
         app:menu="@menu/drawermenu"
         android:layout_gravity="start">
     </com.google.android.material.navigation.NavigationView>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:srcCompat="@drawable/plus"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
+
