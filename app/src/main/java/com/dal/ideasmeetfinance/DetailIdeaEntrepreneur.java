@@ -1,3 +1,4 @@
+//Class to display detailed ideas for the Entrepreneur without the messaging functionality
 package com.dal.ideasmeetfinance;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class DetailIdeaEntrepreneur extends AppCompatActivity {
 
-    private TextView title, author, abstractTxt, content;
+    private TextView title, author, content;
     private FloatingActionButton btnMessage;
     DatabaseReference databaseReference;
     FirebaseDatabase database;
@@ -24,14 +25,13 @@ public class DetailIdeaEntrepreneur extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_idea_entrepreneur);
 
-
+//        Getting values from the previous intent
         Intent intent = getIntent();
         String titleText = intent.getExtras().getString("title");
         String abstractTxt = intent.getExtras().getString("abstractTxt");
         String contentText = intent.getExtras().getString("content");
         String actAuthor = intent.getExtras().getString("author");
         final String authorId = intent.getExtras().getString("authorId");
-        Log.e("m","authorID: "+authorId);
 
         title = findViewById(R.id.title);
         author = findViewById(R.id.author);
@@ -42,7 +42,5 @@ public class DetailIdeaEntrepreneur extends AppCompatActivity {
         title.setText(titleText);
         author.setText("Created by: " + actAuthor);
         content.setText(contentText);
-
-
     }
 }

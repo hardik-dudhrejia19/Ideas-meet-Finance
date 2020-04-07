@@ -1,3 +1,5 @@
+//Class to display the home page feed for a financer
+
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dal.ideasmeetfinance.pojo.Posting;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,11 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FinancerHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
     private RecyclerView recyclerView;
     private FactAdapter adapter;
-    //private List<CardModel> allFactsList;
     private List<Posting> allFactsList;
     private DatabaseReference databaseReference;
 
@@ -41,18 +44,15 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_financer_home);
+
         mDrawerlayout = (DrawerLayout) findViewById(R.id.main);
         mToggle = new ActionBarDrawerToggle(this,mDrawerlayout,R.string.open,R.string.close);
         mDrawerlayout.addDrawerListener(mToggle);
         mToggle.syncState();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-        SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
-
-
 
         allFactsList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
@@ -67,6 +67,7 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
                 {
                     for (DataSnapshot indi : unit.getChildren())
                     {
+//                        Retrieving the value of an idea
                         String title_txt = indi.child("title").getValue().toString();
                         String abstract_txt = indi.child("abs").getValue().toString();
                         String content_txt = indi.child("content").getValue().toString();
@@ -90,6 +91,7 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
         FloatingActionButton floatingActionButton =
                 (FloatingActionButton) findViewById(R.id.fab);
 
+//        Redirecting to the posting idea's page
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,22 +102,28 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
 
     }
 
+//    Handling the navigation bar
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Toast.makeText(getApplicationContext(),"Navigation",Toast.LENGTH_SHORT).show();
         switch(item.getItemId()){
             case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(FinancerHomeActivity.this, LoginActivity.class));
                 finish();
         }
         return true;
     }
 
+//    Handling the Menu Option
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch(id){
             case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(FinancerHomeActivity.this, LoginActivity.class));
                 finish();
                 break;
@@ -127,11 +135,12 @@ public class FinancerHomeActivity extends AppCompatActivity implements Navigatio
         return true;
     }
 
+//    Inflating the view for the menu
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.drawermenu,menu);
-//        return super.onCreateOptionsMenu(menu);
         return true;
     }
 }

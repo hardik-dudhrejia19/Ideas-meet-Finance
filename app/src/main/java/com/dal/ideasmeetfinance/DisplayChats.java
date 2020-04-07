@@ -1,3 +1,4 @@
+//Class used to display the chat screen with users
 package com.dal.ideasmeetfinance;
 
 import androidx.annotation.NonNull;
@@ -31,15 +32,12 @@ public class DisplayChats extends AppCompatActivity {
     private ArrayList<String> userNames;
     private FirebaseUser fuser;
     private DatabaseReference databaseReference;
-
-    private String name="hello";
     DatabaseReference db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_chats);
-
 
         allChatList = new ArrayList<>();
         userNames = new ArrayList<String>();
@@ -51,19 +49,14 @@ public class DisplayChats extends AppCompatActivity {
         SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
         final String myid = sp.getString("UserId", null);
 
-
         databaseReference = FirebaseDatabase.getInstance().getReference("chat");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int flag = 0;
-
                 for (DataSnapshot unit : dataSnapshot.getChildren()){
-
-
+//                    getting users with whom chats exist
                     if(unit.child("sender").getValue().toString().equals(myid) ) {
-
-
                         String cname = unit.child("receiver").getValue().toString();
                         for (int i = 0; i < userNames.size(); i++) {
                             if (userNames.get(i).equals(cname)) {
@@ -77,12 +70,9 @@ public class DisplayChats extends AppCompatActivity {
                                     new ChatModel("Karen Gellar", R.drawable.ideapng, cname));
                         }
                     }
-
                     flag = 0;
-
                     if(unit.child("receiver").getValue().toString().equals(myid)){
                         String cname = unit.child("sender").getValue().toString();
-
                         for (int i = 0; i < userNames.size(); i++) {
                             if (userNames.get(i).equals(cname)) {
                                 flag = 1;
@@ -100,7 +90,6 @@ public class DisplayChats extends AppCompatActivity {
                 }
                 adapter = new ChatAdapter(DisplayChats.this, allChatList);
                 recyclerView.setAdapter(adapter);
-
                 recyclerView.setLayoutManager(new LinearLayoutManager(DisplayChats.this));
             }
 
@@ -134,9 +123,7 @@ public class DisplayChats extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
-
         });
-
         return screen_name[0];
     }
 }

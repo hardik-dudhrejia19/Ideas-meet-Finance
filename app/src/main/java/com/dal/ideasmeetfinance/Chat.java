@@ -1,8 +1,14 @@
+//Class to define the structure of a message being exchanged between two users
+
 package com.dal.ideasmeetfinance;
+
+import java.lang.reflect.Constructor;
 
 public class Chat {
 
     private String sender, receiver, message;
+
+//    Constructor
 
     public Chat(String sender, String receiver, String message) {
         this.sender = sender;
@@ -14,6 +20,8 @@ public class Chat {
     {
 
     }
+
+//    Getter and setter functions
 
     public String getSender() {
         return sender;

@@ -1,3 +1,5 @@
+//Class to display a detailed view of an idea
+
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
@@ -16,27 +18,26 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class DetailedIdea extends AppCompatActivity {
 
-    private TextView title, author, abstractTxt, content;
+    private TextView title, author, content;
     private FloatingActionButton btnMessage;
-    DatabaseReference databaseReference;
     FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
         String isFinancer = sp.getString("Decider", null);
 
         setContentView(R.layout.activity_detailed_idea);
 
-
+//        Getting details of the idea to be displayed from previous activity
         Intent intent = getIntent();
         String titleText = intent.getExtras().getString("title");
         String abstractTxt = intent.getExtras().getString("abstractTxt");
         String contentText = intent.getExtras().getString("content");
         String actAuthor = intent.getExtras().getString("author");
         final String authorId = intent.getExtras().getString("authorId");
-
 
         if(isFinancer.equals("FFalse")){
 
@@ -50,11 +51,8 @@ public class DetailedIdea extends AppCompatActivity {
             finish();
         }
 
-        Log.e("m","authorID: "+authorId);
-
         title = findViewById(R.id.title);
         author = findViewById(R.id.author);
-        //abstractTxt=findViewById()
         content = findViewById(R.id.content);
         btnMessage = findViewById(R.id.chat_button);
         database = FirebaseDatabase.getInstance();
@@ -63,6 +61,7 @@ public class DetailedIdea extends AppCompatActivity {
         author.setText("Created by: " + actAuthor);
         content.setText(contentText);
 
+//        Redirecting to messaging screen
         btnMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

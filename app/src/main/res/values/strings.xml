@@ -20,13 +20,6 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
-    <!--    <string name="pwd"> Password </string>-->
-    <!--    <string name="username"> User Name </string>-->
-    <!--    <string name="regbtn"> REGISTER </string>-->
-    <!--    <string name="name"> Name </string>-->
-    <!--    <string name="Financer"> Financer </string>-->
-    <!--    <string name="email"> Email </string>-->
-    <!--    <string name="Enterpreneur">Enterpreneur</string>-->
     <string name="email"> E-Mail </string>
     <string name="pwd"> Password </string>
     <string name="DalId">Username</string>

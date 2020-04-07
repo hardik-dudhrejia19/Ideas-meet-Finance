@@ -1,4 +1,8 @@
+//Class to define the structure of a user's profile
+
 package com.dal.ideasmeetfinance.pojo;
+
+import java.lang.reflect.Constructor;
 
 public class Users {
     String email;
@@ -8,7 +12,7 @@ public class Users {
     String userId;
     String descision;
 
-
+//    Constructor
     public Users(String email, String name, String username, Boolean entrepreneur, Boolean financer, String userId,String descision) {
         this.email = email;
         this.name = name;
@@ -21,6 +25,8 @@ public class Users {
 
     public Users() {
     }
+
+//    Setter and Getter functions
 
     public String getUserId() {
         return userId;
@@ -69,7 +75,6 @@ public class Users {
     public void setFinancer(Boolean financer) {
         this.financer = financer;
     }
-
 
     public String getUsername() {
         return username;

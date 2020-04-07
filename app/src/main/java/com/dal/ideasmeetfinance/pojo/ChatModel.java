@@ -1,3 +1,5 @@
+//Class to define the structure of a message
+
 package com.dal.ideasmeetfinance.pojo;
 
 import com.dal.ideasmeetfinance.DisplayChats;
@@ -9,6 +11,8 @@ public class ChatModel {
     private int image;
     private String nameHidden;
 
+//    Constructor
+
     public ChatModel(String nameCard, int image, String nameHidden) {
         this.nameCard = nameCard;
         this.image = image;
@@ -17,6 +21,8 @@ public class ChatModel {
 
     public ChatModel(DisplayChats displayChats, List<ChatModel> allFactsList) {
     }
+
+//    Getter functions
 
     public String getNameCard() {
         return nameCard;

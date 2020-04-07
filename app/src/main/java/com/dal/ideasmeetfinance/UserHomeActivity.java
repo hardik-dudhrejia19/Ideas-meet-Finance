@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dal.ideasmeetfinance.pojo.Posting;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
 
     private DrawerLayout mDrawerlayout;
     private ActionBarDrawerToggle mToggle;
@@ -51,7 +51,6 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
         View headerLayout = navigationView.getHeaderView(0);
         SharedPreferences sp = this.getSharedPreferences("Login", MODE_PRIVATE);
-
 
         allFactsList = new ArrayList<>();
         recyclerView = findViewById(R.id.recycler_view);
@@ -89,6 +88,7 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         FloatingActionButton floatingActionButton =
                 (FloatingActionButton) findViewById(R.id.fab);
 
+//        Handling click for posting ideas
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +103,7 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         Toast.makeText(getApplicationContext(),"Navigation",Toast.LENGTH_SHORT).show();
         switch(item.getItemId()){
             case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
                 finish();
         }
@@ -112,8 +113,10 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
        int id = item.getItemId();
+//       Redirecting to the suitable screen on the basis of the option chosen by the user
         switch(id) {
             case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
                 finish();
                 break;
@@ -126,9 +129,8 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+//        Setting the view for the menu
         getMenuInflater().inflate(R.menu.drawermenu,menu);
-//        return super.onCreateOptionsMenu(menu);
         return true;
     }
 }

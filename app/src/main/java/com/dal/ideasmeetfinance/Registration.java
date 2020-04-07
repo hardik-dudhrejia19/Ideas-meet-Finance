@@ -1,3 +1,5 @@
+//Class to implement the registration activity of a user
+
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
@@ -28,16 +30,10 @@ public class Registration extends AppCompatActivity {
     private EditText name, email, password, dalId;
     RadioButton student, professor;
     Button register;
-    ImageView imgView;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     boolean studnt, prof;
-    static int PreqCode = 1;
-    //  static int REQCODE = 1;
-    static int camCode = 0;
-    static int galCode = 1;
-    String photo;
-    Uri selectedImage;
+
     private static final String LOG_TAG = "RegisterAct";
     String userID;
     Boolean ui, setImage = false;
@@ -60,7 +56,6 @@ public class Registration extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioBtnGrp);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         student.setChecked(true);
-
 
         //OnClick listener method for register button
         register.setOnClickListener(new View.OnClickListener() {
@@ -117,13 +112,7 @@ public class Registration extends AppCompatActivity {
             }
         });
     }
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
-//    }
+
     protected void firebaseAuthInsertion(final String mail, String password, final String username,
                                          final String name, final boolean financer, final boolean entrepreneur) {
         mAuth.createUserWithEmailAndPassword(mail, password)
@@ -132,11 +121,7 @@ public class Registration extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-
-
-                            // Sign in success, update UI with the signed-in user's information
                             System.out.println("success");
-                            //  Log.d(LOG_TAG,"TAG",+ task.isSuccessful());
                             FirebaseUser user = mAuth.getCurrentUser();
                             userID = mAuth.getUid();
                             SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
@@ -158,8 +143,6 @@ public class Registration extends AppCompatActivity {
                             System.out.println("FIREBASE EXCEPTION " + task.getException());
                             System.out.println("Else condition");
                         }
-
-                        // ...
                     }
                 });
     }

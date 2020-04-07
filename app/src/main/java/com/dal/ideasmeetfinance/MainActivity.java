@@ -30,11 +30,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         View headerLayout = navigationView.getHeaderView(0);
-        TextView txt_email =  headerLayout.findViewById(R.id.userEmail);
-        TextView txt_username =  headerLayout.findViewById(R.id.userName);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

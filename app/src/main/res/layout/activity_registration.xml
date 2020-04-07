@@ -11,8 +11,6 @@
 
     tools:context=".Registration">
 
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lblName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"

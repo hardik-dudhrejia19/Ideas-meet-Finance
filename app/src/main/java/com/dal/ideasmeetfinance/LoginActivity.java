@@ -1,3 +1,5 @@
+//Class to handle the login of a user
+
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
@@ -28,10 +30,12 @@ public class LoginActivity extends AppCompatActivity {
     Button login, register;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         email = findViewById(R.id.email);
@@ -42,9 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                Check if all fields are filled
                 if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
-
                     email.setError("Please fill in your email ID");
                     password.setError("Please fill in your password");
                 } else {
@@ -54,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+//        Redirect to registration page
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
     }
 
     protected void login(String email, String password) {
@@ -129,8 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
 
                         }
-
-                        // ...
                     }
                 });
     }

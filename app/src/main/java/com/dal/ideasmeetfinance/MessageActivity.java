@@ -1,3 +1,5 @@
+//Class to implement sending and receiving messages
+
 package com.dal.ideasmeetfinance;
 
 import android.content.Intent;
@@ -52,7 +54,6 @@ public class MessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
@@ -62,7 +63,6 @@ public class MessageActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-
 
         profile_image=findViewById(R.id.profile_image);
         username=findViewById(R.id.username);
@@ -78,14 +78,17 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String msg=text_send.getText().toString();
+                //Check if the user tries to send an empty message
                 if(!msg.equals(""))
                 {
+                    //if the message is not empty, call the send message function
                     sendMessage(fuser.getUid(),authorId,msg);
                 }
                 else
                 {
                     Toast.makeText(MessageActivity.this,"You can't send empty message",Toast.LENGTH_SHORT).show();
                 }
+                //setting the edit text to blank space
                 text_send.setText("");
             }
         });
@@ -100,7 +103,6 @@ public class MessageActivity extends AppCompatActivity {
                 username.setText(userobj.getUsername());
                 profile_image.setImageResource(R.mipmap.ic_launcher);
                 readMessages(fuser.getUid(),authorId);
-
             }
 
             @Override
@@ -115,32 +117,32 @@ public class MessageActivity extends AppCompatActivity {
     {
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
 
+        //storing messages in database
         HashMap<String,Object> hashMap=new HashMap<>();
         hashMap.put("sender",sender);
         hashMap.put("receiver",receiver);
         hashMap.put("message",message);
-
         reference.child("chat").push().setValue(hashMap);
-
     }
 
     private void readMessages(final String myid, final String userid)
     {
         mchat=new ArrayList<>();
-        Log.e("try","inside read message");
+
         reference=FirebaseDatabase.getInstance().getReference("chat");
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mchat.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
+//                    Retrieving chats
                     Chat chat = snapshot.getValue(Chat.class);
+                    //Retrieving chats upon the basis of id of sender and receiver
                     if (chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
                             (chat.getReceiver().equals(userid) && chat.getSender().equals(myid))) {
-                        Log.e("try","inside adding chats");
                         mchat.add(chat) ;
-                        System.out.println("hi hello "+mchat);
                     }
 
                     messageAdapter=new MessageAdapter(MessageActivity.this,mchat);
